@@ -12,6 +12,7 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@workspace/ui/components/empty"
+import { Map, MapRoute } from "@workspace/ui/components/map"
 
 export default async function Page({
   params,
@@ -65,6 +66,17 @@ export default async function Page({
           )}
         </CardHeader>
       </Card>
+      <div className="h-full w-full">
+        <Map center={event.tracks[0]?.startingPoint} zoom={15}>
+          {event.tracks.map((track) => (
+            <MapRoute
+              key={track.slug}
+              coordinates={track.route}
+              color={`#${track.color}`}
+            />
+          ))}
+        </Map>
+      </div>
     </div>
   )
 }
