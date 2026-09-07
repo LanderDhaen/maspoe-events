@@ -3,6 +3,7 @@ import { formatDateRange } from "@web/lib/event"
 import { Badge } from "@workspace/ui/components/badge"
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -71,6 +72,17 @@ export default async function Page({
             <CardDescription>{event.description}</CardDescription>
           )}
         </CardHeader>
+        <CardContent className="flex flex-col gap-2">
+          {event.tracks.map((track) => (
+            <Badge
+              style={{ backgroundColor: `#${track.color}` }}
+              key={track.slug}
+              className="w-32"
+            >
+              {track.name}
+            </Badge>
+          ))}
+        </CardContent>
       </Card>
       <div className="h-full w-full">
         <Map center={event.tracks[0]?.startingPoint} zoom={15}>
