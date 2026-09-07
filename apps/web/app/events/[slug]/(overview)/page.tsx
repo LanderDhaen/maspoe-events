@@ -62,7 +62,7 @@ export default async function Page({
 
   return (
     <div className="relative h-lvh w-full">
-      <Card className="absolute top-4 right-4 left-4 z-10 max-w-md">
+      <Card className="absolute top-4 right-4 left-4 z-10 max-w-md opacity-95">
         <CardHeader>
           <CardTitle>{event.name}</CardTitle>
           <CardDescription className="italic">
