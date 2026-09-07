@@ -103,8 +103,24 @@ export default async function Page({
                   </Badge>
                 </MarkerContent>
               </MapMarker>
+              {track.checkpoints.map((checkpoint) => (
+                <MapMarker
+                  key={checkpoint.id}
+                  longitude={checkpoint.longitude}
+                  latitude={checkpoint.latitude}
+                >
+                  <MarkerContent>
+                    <div
+                      className="flex size-6 items-center justify-center rounded-full text-primary-foreground tabular-nums"
+                      style={{ backgroundColor: `#${track.color}` }}
+                    >
+                      {checkpoint.abbreviation}
+                    </div>
+                  </MarkerContent>
+                </MapMarker>
+              ))}
             </>
-          ))}{" "}
+          ))}
         </Map>
       </div>
     </div>

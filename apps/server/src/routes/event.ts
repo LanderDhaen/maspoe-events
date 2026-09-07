@@ -23,6 +23,18 @@ export const eventRouter = new Elysia({
             "track.startingPoint",
             "track.endPoint",
             "track.route",
+            jsonArrayFrom(
+              eb
+                .selectFrom("checkpoint")
+                .select([
+                  "checkpoint.id",
+                  "checkpoint.name",
+                  "checkpoint.abbreviation",
+                  "checkpoint.longitude",
+                  "checkpoint.latitude",
+                ])
+                .whereRef("checkpoint.trackId", "=", "track.id")
+            ).as("checkpoints"),
           ])
           .whereRef("track.eventId", "=", "event.id")
       ).as("tracks"),
