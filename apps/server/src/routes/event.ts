@@ -1,3 +1,4 @@
+import { Coordinate } from "@server/types/track"
 import { db } from "../database"
 import { Elysia } from "elysia"
 import { jsonArrayFrom } from "kysely/helpers/postgres"
@@ -46,5 +47,16 @@ export const eventRouter = new Elysia({
     return status(404, "Het evenement dat je zoekt bestaat niet.")
   }
 
-  return event
+  const coordinates = event.tracks.flatMap((track) => track.route)
+  const longitudes = coordinates.map(([longitude]) => longitude)
+  const latitudes = coordinates.map(([, latitude]) => latitude)
+  const bounds = [
+    [Math.min(...longitudes), Math.min(...latitudes)],
+    [Math.max(...longitudes), Math.max(...latitudes)],
+  ]
+
+  return {
+    ...event,
+    bounds,
+  }
 })

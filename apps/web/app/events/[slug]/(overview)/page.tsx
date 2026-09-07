@@ -85,7 +85,12 @@ export default async function Page({
         </CardContent>
       </Card>
       <div className="h-full w-full">
-        <Map center={event.tracks[0]?.startingPoint} zoom={15}>
+        <Map
+          bounds={event.bounds}
+          fitBoundsOptions={{
+            padding: 50,
+          }}
+        >
           {event.tracks.map((track) => (
             <>
               <MapRoute
