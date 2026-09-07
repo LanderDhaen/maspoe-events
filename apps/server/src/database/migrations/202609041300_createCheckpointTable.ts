@@ -1,17 +1,22 @@
-import { Kysely } from "kysely"
+import { Kysely, sql } from "kysely"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const up = async (db: Kysely<any>) => {
   await db.schema
     .createTable("checkpoint")
-    .addColumn("id", "serial", (c) => c.primaryKey())
-    .addColumn("createdAt", "timestamp", (c) => c.notNull().defaultTo("now()"))
-    .addColumn("updatedAt", "timestamp", (c) => c.notNull().defaultTo("now()"))
+    .addColumn("id", "integer", (c) =>
+      c.generatedByDefaultAsIdentity().primaryKey()
+    )
+    .addColumn("createdAt", "timestamptz", (c) =>
+      c.notNull().defaultTo("now()")
+    )
+    .addColumn("updatedAt", "timestamptz", (c) =>
+      c.notNull().defaultTo("now()")
+    )
     .addColumn("isActive", "boolean", (c) => c.notNull().defaultTo(true))
-    .addColumn("name", "varchar", (c) => c.notNull())
-    .addColumn("abbreviation", "varchar", (c) => c.notNull())
-    .addColumn("longitude", "double precision", (c) => c.notNull())
-    .addColumn("latitude", "double precision", (c) => c.notNull())
+    .addColumn("name", "text", (c) => c.notNull())
+    .addColumn("abbreviation", "text", (c) => c.notNull())
+    .addColumn("coordinates", sql`point`, (c) => c.notNull())
 
     // Foreign keys
 
