@@ -1,5 +1,6 @@
 import { client } from "@web/api"
 import { formatDateRange } from "@web/lib/event"
+import { Badge } from "@workspace/ui/components/badge"
 import {
   Card,
   CardDescription,
@@ -12,7 +13,12 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@workspace/ui/components/empty"
-import { Map, MapRoute } from "@workspace/ui/components/map"
+import {
+  Map,
+  MapRoute,
+  MapMarker,
+  MarkerContent,
+} from "@workspace/ui/components/map"
 
 export default async function Page({
   params,
@@ -69,12 +75,36 @@ export default async function Page({
       <div className="h-full w-full">
         <Map center={event.tracks[0]?.startingPoint} zoom={15}>
           {event.tracks.map((track) => (
-            <MapRoute
-              key={track.slug}
-              coordinates={track.route}
-              color={`#${track.color}`}
-            />
-          ))}
+            <>
+              <MapRoute
+                key={track.slug}
+                coordinates={track.route}
+                color={`#${track.color}`}
+              />
+              <MapMarker
+                key={`${track.slug}-start`}
+                longitude={track.startingPoint[0]}
+                latitude={track.startingPoint[1]}
+              >
+                <MarkerContent>
+                  <Badge style={{ backgroundColor: `#${track.color}` }}>
+                    Start
+                  </Badge>
+                </MarkerContent>
+              </MapMarker>{" "}
+              <MapMarker
+                key={`${track.slug}-end`}
+                longitude={track.endPoint[0]}
+                latitude={track.endPoint[1]}
+              >
+                <MarkerContent>
+                  <Badge style={{ backgroundColor: `#${track.color}` }}>
+                    Finish
+                  </Badge>
+                </MarkerContent>
+              </MapMarker>
+            </>
+          ))}{" "}
         </Map>
       </div>
     </div>
