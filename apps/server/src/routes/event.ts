@@ -1,3 +1,4 @@
+import { Point } from "@server/types/geo"
 import { db } from "../database"
 import { Elysia } from "elysia"
 import { jsonArrayFrom } from "kysely/helpers/postgres"
@@ -20,17 +21,23 @@ export const eventRouter = new Elysia({
             "track.name",
             "track.slug",
             "track.color",
-            "track.startingPoint",
-            "track.endPoint",
-            "track.path",
+            eb
+              .fn<Point>("point_as_json", [eb.ref("track.startingPoint")])
+              .as("startingPoint"),
+            eb
+              .fn<Point>("point_as_json", [eb.ref("track.endPoint")])
+              .as("endPoint"),
+            eb.fn<Point[]>("path_as_json", [eb.ref("track.path")]).as("path"),
             jsonArrayFrom(
               eb
                 .selectFrom("checkpoint")
-                .select([
+                .select((eb) => [
                   "checkpoint.id",
                   "checkpoint.name",
                   "checkpoint.abbreviation",
-                  "checkpoint.point",
+                  eb
+                    .fn<Point>("point_as_json", [eb.ref("checkpoint.point")])
+                    .as("point"),
                 ])
                 .whereRef("checkpoint.trackId", "=", "track.id")
             ).as("checkpoints"),
@@ -46,8 +53,8 @@ export const eventRouter = new Elysia({
   }
 
   const coordinates = event.tracks.flatMap((track) => track.path)
-  const longitudes = coordinates.map((coord) => coord[0]!)
-  const latitudes = coordinates.map((coord) => coord[1]!)
+  const longitudes = coordinates.map((coord) => coord.x)
+  const latitudes = coordinates.map((coord) => coord.y)
 
   const bounds = [
     Math.min(...longitudes),

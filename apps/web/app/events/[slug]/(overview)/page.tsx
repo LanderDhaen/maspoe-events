@@ -95,13 +95,13 @@ export default async function Page({
             <>
               <MapRoute
                 key={track.slug}
-                coordinates={track.path as [number, number][]}
+                coordinates={track.path.map((point) => [point.x, point.y])}
                 color={`#${track.color}`}
               />
               <MapMarker
                 key={`${track.slug}-start`}
-                longitude={track.startingPoint[0]!}
-                latitude={track.startingPoint[1]!}
+                longitude={track.startingPoint.x}
+                latitude={track.startingPoint.y}
               >
                 <MarkerContent>
                   <Badge style={{ backgroundColor: `#${track.color}` }}>
@@ -111,8 +111,8 @@ export default async function Page({
               </MapMarker>{" "}
               <MapMarker
                 key={`${track.slug}-end`}
-                longitude={track.endPoint[0]!}
-                latitude={track.endPoint[1]!}
+                longitude={track.endPoint.x}
+                latitude={track.endPoint.y}
               >
                 <MarkerContent>
                   <Badge style={{ backgroundColor: `#${track.color}` }}>
@@ -123,8 +123,8 @@ export default async function Page({
               {track.checkpoints.map((checkpoint) => (
                 <MapMarker
                   key={checkpoint.id}
-                  longitude={checkpoint.point[0]!}
-                  latitude={checkpoint.point[1]!}
+                  longitude={checkpoint.point.x}
+                  latitude={checkpoint.point.y}
                 >
                   <MarkerContent>
                     <div
