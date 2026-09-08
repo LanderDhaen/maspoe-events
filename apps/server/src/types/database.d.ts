@@ -6,7 +6,7 @@ import {
   Updateable,
 } from "kysely"
 
-import { Path, Point } from "./point"
+import { Path, Point } from "./geo"
 
 export interface Database {
   event: EventTable
