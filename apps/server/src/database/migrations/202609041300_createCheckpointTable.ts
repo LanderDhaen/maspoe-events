@@ -16,7 +16,7 @@ export const up = async (db: Kysely<any>) => {
     .addColumn("isActive", "boolean", (c) => c.notNull().defaultTo(true))
     .addColumn("name", "text", (c) => c.notNull())
     .addColumn("abbreviation", "text", (c) => c.notNull())
-    .addColumn("point", "jsonb", (c) => c.notNull())
+    .addColumn("point", sql`point`, (c) => c.notNull())
 
     // Foreign keys
 

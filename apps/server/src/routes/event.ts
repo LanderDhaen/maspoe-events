@@ -1,4 +1,3 @@
-import { Bounds } from "@server/types/geo"
 import { db } from "../database"
 import { Elysia } from "elysia"
 import { jsonArrayFrom } from "kysely/helpers/postgres"
@@ -55,7 +54,7 @@ export const eventRouter = new Elysia({
     Math.min(...latitudes),
     Math.max(...longitudes),
     Math.max(...latitudes),
-  ] satisfies Bounds
+  ] satisfies [number, number, number, number]
 
   return {
     ...event,
