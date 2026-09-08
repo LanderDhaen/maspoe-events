@@ -46,8 +46,8 @@ export const eventRouter = new Elysia({
   }
 
   const coordinates = event.tracks.flatMap((track) => track.path)
-  const longitudes = coordinates.map((coord) => coord[0])
-  const latitudes = coordinates.map((coord) => coord[1])
+  const longitudes = coordinates.map((coord) => coord[0]!)
+  const latitudes = coordinates.map((coord) => coord[1]!)
 
   const bounds = [
     Math.min(...longitudes),

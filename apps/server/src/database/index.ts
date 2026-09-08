@@ -1,4 +1,4 @@
-import { DB, Point } from "@server/types/database"
+import { Database } from "@server/types/database"
 import { Pool, types } from "pg"
 import { CamelCasePlugin, Kysely, PostgresDialect, sql } from "kysely"
 
@@ -12,12 +12,7 @@ export const dialect = new PostgresDialect({
   }),
 })
 
-export const db = new Kysely<DB>({
+export const db = new Kysely<Database>({
   dialect,
   plugins: [new CamelCasePlugin()],
 })
-
-export const point = ({ x, y }: Point) => sql<Point>`point(${x},${y})`
-
-export const path = (points: Point[]) =>
-  sql<Point[]>`${`[${points.map(({ x, y }) => `(${x},${y})`).join(",")}]`}`
