@@ -19,8 +19,7 @@ export const getEventBySlug = async (slug: string) => {
             "track.name",
             "track.slug",
             "track.color",
-            "track.startingPoint",
-            parsePoint(eb.ref("track.startingPoint")).as("startingPointB"),
+            parsePoint(eb.ref("track.startingPoint")).as("startingPoint"),
             parsePoint(eb.ref("track.endPoint")).as("endPoint"),
             parsePath(eb.ref("track.path")).as("path"),
             jsonArrayFrom(
