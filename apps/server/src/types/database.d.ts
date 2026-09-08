@@ -30,7 +30,7 @@ export interface TrackTable {
   color: ColumnType<string, string, string>
   startingPoint: ColumnType<Point, Point, Point>
   endPoint: ColumnType<Point, Point, Point>
-  path: ColumnType<Path, Path, Path>
+  path: ColumnType<Point[], Point[], Point[]>
   eventId: ColumnType<number, number, number>
 }
 
