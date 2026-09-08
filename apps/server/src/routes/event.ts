@@ -45,13 +45,19 @@ export const eventRouter = new Elysia({
     return status(404, "Het evenement dat je zoekt bestaat niet.")
   }
 
-  const track = await db.selectFrom("track").selectAll().executeTakeFirst()
+  const coordinates = event.tracks.flatMap((track) => track.path)
+  const longitudes = coordinates.map((coord) => coord[0])
+  const latitudes = coordinates.map((coord) => coord[1])
 
-  console.log("event", typeof event.tracks[0]?.startingPoint.x)
-  console.log("track", typeof track?.startingPoint.x)
+  const bounds = [
+    Math.min(...longitudes),
+    Math.min(...latitudes),
+    Math.max(...longitudes),
+    Math.max(...latitudes),
+  ] as [number, number, number, number]
 
-  console.log("event path", typeof event.tracks[0]?.path)
-  console.log("track path", typeof track?.path)
-
-  return event
+  return {
+    ...event,
+    bounds,
+  }
 })

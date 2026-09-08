@@ -95,7 +95,7 @@ export default async function Page({
             <>
               <MapRoute
                 key={track.slug}
-                coordinates={track.route}
+                coordinates={track.path}
                 color={`#${track.color}`}
               />
               <MapMarker
@@ -123,8 +123,8 @@ export default async function Page({
               {track.checkpoints.map((checkpoint) => (
                 <MapMarker
                   key={checkpoint.id}
-                  longitude={checkpoint.longitude}
-                  latitude={checkpoint.latitude}
+                  longitude={checkpoint.point[0]}
+                  latitude={checkpoint.point[1]}
                 >
                   <MarkerContent>
                     <div

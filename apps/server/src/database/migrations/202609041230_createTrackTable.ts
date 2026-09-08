@@ -16,10 +16,10 @@ export const up = async (db: Kysely<any>) => {
     .addColumn("isActive", "boolean", (c) => c.notNull().defaultTo(true))
     .addColumn("name", "text", (c) => c.notNull())
     .addColumn("slug", "text", (c) => c.notNull().unique())
-    .addColumn("startingPoint", sql`point`, (c) => c.notNull())
-    .addColumn("endPoint", sql`point`, (c) => c.notNull())
-    .addColumn("path", sql`path`, (c) => c.notNull())
-    .addColumn("color", "varchar", (c) => c.notNull().defaultTo("1447e6"))
+    .addColumn("startingPoint", "jsonb", (c) => c.notNull())
+    .addColumn("endPoint", "jsonb", (c) => c.notNull())
+    .addColumn("path", "jsonb", (c) => c.notNull())
+    .addColumn("color", "text", (c) => c.notNull().defaultTo("1447e6"))
 
     // Foreign keys
 
