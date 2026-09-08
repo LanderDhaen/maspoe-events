@@ -1,7 +1,6 @@
-import { Database } from "@server/types/database"
+import { DB, Point } from "@server/types/database"
 import { Pool, types } from "pg"
 import { CamelCasePlugin, Kysely, PostgresDialect, sql } from "kysely"
-import { Point } from "@server/types/track"
 
 types.setTypeParser(20, (val) => {
   return parseInt(val, 10)
@@ -13,7 +12,7 @@ export const dialect = new PostgresDialect({
   }),
 })
 
-export const db = new Kysely<Database>({
+export const db = new Kysely<DB>({
   dialect,
   plugins: [new CamelCasePlugin()],
 })

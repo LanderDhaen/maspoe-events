@@ -45,5 +45,13 @@ export const eventRouter = new Elysia({
     return status(404, "Het evenement dat je zoekt bestaat niet.")
   }
 
+  const track = await db.selectFrom("track").selectAll().executeTakeFirst()
+
+  console.log("event", typeof event.tracks[0]?.startingPoint.x)
+  console.log("track", typeof track?.startingPoint.x)
+
+  console.log("event path", typeof event.tracks[0]?.path)
+  console.log("track path", typeof track?.path)
+
   return event
 })

@@ -13,7 +13,8 @@
   },
   "devDependencies": {
     "@types/pg": "^8.23.1",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "kysely-codegen": "^0.20.0"
   },
   "module": "src/index.js"
 }
