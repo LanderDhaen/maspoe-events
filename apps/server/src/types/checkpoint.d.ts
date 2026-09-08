@@ -6,12 +6,13 @@ import {
   Updateable,
 } from "kysely"
 
+import { Point } from "./track"
+
 export interface CheckpointTable {
   id: Generated<number>
   name: ColumnType<string, string, string>
   abbreviation: ColumnType<string, string, string>
-  longitude: ColumnType<number, number, number>
-  latitude: ColumnType<number, number, number>
+  point: ColumnType<Point, Point, Point>
   trackId: ColumnType<number, number, number>
 }
 

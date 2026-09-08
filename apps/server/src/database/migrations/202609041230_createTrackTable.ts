@@ -18,7 +18,7 @@ export const up = async (db: Kysely<any>) => {
     .addColumn("slug", "text", (c) => c.notNull().unique())
     .addColumn("startingPoint", sql`point`, (c) => c.notNull())
     .addColumn("endPoint", sql`point`, (c) => c.notNull())
-    .addColumn("route", sql`path`, (c) => c.notNull())
+    .addColumn("path", sql`path`, (c) => c.notNull())
     .addColumn("color", "varchar", (c) => c.notNull().defaultTo("1447e6"))
 
     // Foreign keys

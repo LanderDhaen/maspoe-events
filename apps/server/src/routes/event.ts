@@ -1,4 +1,3 @@
-import { Coordinate } from "@server/types/track"
 import { db } from "../database"
 import { Elysia } from "elysia"
 import { jsonArrayFrom } from "kysely/helpers/postgres"
@@ -23,7 +22,7 @@ export const eventRouter = new Elysia({
             "track.color",
             "track.startingPoint",
             "track.endPoint",
-            "track.route",
+            "track.path",
             jsonArrayFrom(
               eb
                 .selectFrom("checkpoint")
@@ -31,8 +30,7 @@ export const eventRouter = new Elysia({
                   "checkpoint.id",
                   "checkpoint.name",
                   "checkpoint.abbreviation",
-                  "checkpoint.longitude",
-                  "checkpoint.latitude",
+                  "checkpoint.point",
                 ])
                 .whereRef("checkpoint.trackId", "=", "track.id")
             ).as("checkpoints"),
@@ -47,16 +45,5 @@ export const eventRouter = new Elysia({
     return status(404, "Het evenement dat je zoekt bestaat niet.")
   }
 
-  const coordinates = event.tracks.flatMap((track) => track.route)
-  const longitudes = coordinates.map(([longitude]) => longitude)
-  const latitudes = coordinates.map(([, latitude]) => latitude)
-  const bounds = [
-    [Math.min(...longitudes), Math.min(...latitudes)],
-    [Math.max(...longitudes), Math.max(...latitudes)],
-  ]
-
-  return {
-    ...event,
-    bounds,
-  }
+  return event
 })
