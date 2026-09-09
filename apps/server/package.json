@@ -6,10 +6,15 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "1.4.30"
+    "elysia": "1.4.30",
+    "kysely": "^0.29.5",
+    "kysely-ctl": "^0.21.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@types/pg": "^8.23.1",
+    "bun-types": "latest",
+    "kysely-codegen": "^0.20.0"
   },
   "module": "src/index.js"
 }

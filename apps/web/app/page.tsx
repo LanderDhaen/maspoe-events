@@ -1,19 +1,64 @@
-import { Button } from "@workspace/ui/components/button"
+import { client } from "@web/api"
+import { formatDateRange } from "@web/lib/event"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@workspace/ui/components/empty"
 
-export default function Page() {
+export default async function Page() {
+  const { data: event, error } = await client
+    .events({
+      slug: "city-night-run-aalst-2026",
+    })
+    .get()
+
+  if (error) {
+    if (error.status === 404) {
+      return (
+        <Empty className="h-lvh bg-muted/30">
+          <EmptyHeader>
+            <EmptyTitle>Evenement niet gevonden</EmptyTitle>
+            <EmptyDescription>
+              Helaas, het evenement dat je zoekt bestaat niet.
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      )
+    }
+
+    return (
+      <Empty className="h-lvh bg-muted/30">
+        <EmptyHeader>
+          <EmptyTitle>Er is iets misgegaan</EmptyTitle>
+          <EmptyDescription>
+            Helaas, er is iets misgegaan bij het ophalen van het evenement.
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    )
+  }
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="text-muted-foreground font-mono text-xs">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div className="relative h-lvh w-full">
+      <Card className="absolute top-4 right-4 left-4 z-10 max-w-md">
+        <CardHeader>
+          <CardTitle>{event.name}</CardTitle>
+          <CardDescription className="italic">
+            {formatDateRange(event.startDate, event.endDate)}
+          </CardDescription>
+          {event.description && (
+            <CardDescription>{event.description}</CardDescription>
+          )}
+        </CardHeader>
+      </Card>
     </div>
   )
 }
