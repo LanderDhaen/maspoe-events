@@ -22,7 +22,7 @@ import {
 } from "@workspace/ui/components/map"
 import NotFound from "./not-found"
 import { Fragment } from "react"
-import TrackVisibilityFilter from "@web/components/track-visibility-filter"
+import TrackVisibility from "@web/components/track-visibility"
 
 export default async function Page({
   params,
@@ -66,14 +66,8 @@ export default async function Page({
             <CardDescription>{event.description}</CardDescription>
           )}
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          {event.tracks.map((track) => (
-            <TrackVisibilityFilter
-              key={track.slug}
-              track={track}
-              defaultTracks={event.tracks.map((t) => t.slug)}
-            />
-          ))}
+        <CardContent>
+          <TrackVisibility tracks={event.tracks} />
         </CardContent>
       </Card>
       <div className="h-full w-full">
