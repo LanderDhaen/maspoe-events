@@ -3,6 +3,14 @@
 import { Track } from "@web/types/track"
 import { Badge } from "@workspace/ui/components/badge"
 import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@workspace/ui/components/empty"
+import { MapPinX } from "lucide-react"
+import {
   Map,
   MapRoute,
   MapMarker,
@@ -23,6 +31,22 @@ export default function EventMap({ tracks, bounds }: EventMapProps) {
     "tracks",
     parseAsArrayOf(parseAsString, ",").withDefault(defaultTracks)
   )
+
+  if (tracks.length === 0) {
+    return (
+      <Empty className="h-full bg-muted/30">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <MapPinX />
+          </EmptyMedia>
+          <EmptyTitle>Geen routes gevonden</EmptyTitle>
+          <EmptyDescription className="max-w-xs text-pretty">
+            Helaas, dit evenement heeft geen routes
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    )
+  }
 
   return (
     <Map
