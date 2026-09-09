@@ -17,9 +17,9 @@ import {
   MapMarker,
   MarkerContent,
 } from "@workspace/ui/components/map"
-import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"
 import { Fragment } from "react"
 import { Button } from "@workspace/ui/components/button"
+import { useVisibleTracks } from "@web/hooks/useVisibleTracks"
 
 interface EventMapProps {
   tracks: Track[]
@@ -29,10 +29,7 @@ interface EventMapProps {
 export default function EventMap({ tracks, bounds }: EventMapProps) {
   const defaultTracks = tracks.map((track) => track.slug)
 
-  const [visibleTracks, setVisibleTracks] = useQueryState(
-    "tracks",
-    parseAsArrayOf(parseAsString, ",").withDefault(defaultTracks)
-  )
+  const [visibleTracks, setVisibleTracks] = useVisibleTracks(defaultTracks)
 
   if (visibleTracks.length === 0) {
     const handleShowAllTracks = () => {

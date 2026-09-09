@@ -1,10 +1,10 @@
 "use client"
 
+import { useVisibleTracks } from "@web/hooks/useVisibleTracks"
 import { Track } from "@web/types/track"
 import { Badge } from "@workspace/ui/components/badge"
 import { Checkbox } from "@workspace/ui/components/checkbox"
 import { Field, FieldGroup, FieldLabel } from "@workspace/ui/components/field"
-import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"
 
 interface TrackVisibilityProps {
   tracks: Track[]
@@ -13,10 +13,7 @@ interface TrackVisibilityProps {
 export default function TrackVisibility({ tracks }: TrackVisibilityProps) {
   const defaultTracks = tracks.map((track) => track.slug)
 
-  const [visibleTracks, setVisibleTracks] = useQueryState(
-    "tracks",
-    parseAsArrayOf(parseAsString, ",").withDefault(defaultTracks)
-  )
+  const [visibleTracks, setVisibleTracks] = useVisibleTracks(defaultTracks)
 
   const handleCheckboxChange = (slug: string) => {
     if (visibleTracks.includes(slug)) {
