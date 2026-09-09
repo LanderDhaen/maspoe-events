@@ -10,7 +10,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@workspace/ui/components/empty"
-import { MapPinX, RefreshCw } from "lucide-react"
+import { MapPinOff, RefreshCw } from "lucide-react"
 import {
   Map,
   MapRoute,
@@ -34,32 +34,16 @@ export default function EventMap({ tracks, bounds }: EventMapProps) {
     parseAsArrayOf(parseAsString, ",").withDefault(defaultTracks)
   )
 
-  if (tracks.length === 0) {
-    return (
-      <Empty className="h-full bg-muted/30">
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <MapPinX />
-          </EmptyMedia>
-          <EmptyTitle>Geen routes gevonden</EmptyTitle>
-          <EmptyDescription className="max-w-xs text-pretty">
-            Helaas, dit evenement heeft geen routes
-          </EmptyDescription>
-        </EmptyHeader>
-      </Empty>
-    )
-  }
-
   if (visibleTracks.length === 0) {
     const handleShowAllTracks = () => {
       setVisibleTracks(null)
     }
 
     return (
-      <Empty className="h-full bg-muted/30">
+      <Empty className="h-lvh bg-muted/30">
         <EmptyHeader>
           <EmptyMedia variant="icon">
-            <MapPinX />
+            <MapPinOff />
           </EmptyMedia>
           <EmptyTitle>Geen routes geselecteerd</EmptyTitle>
           <EmptyDescription className="max-w-xs text-pretty">
