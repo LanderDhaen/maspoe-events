@@ -20,6 +20,7 @@ import {
   MapMarker,
   MarkerContent,
 } from "@workspace/ui/components/map"
+import NotFound from "./not-found"
 
 export default async function Page({
   params,
@@ -36,16 +37,7 @@ export default async function Page({
 
   if (error) {
     if (error.status === 404) {
-      return (
-        <Empty className="h-lvh bg-muted/30">
-          <EmptyHeader>
-            <EmptyTitle>Evenement niet gevonden</EmptyTitle>
-            <EmptyDescription>
-              Helaas, het evenement dat je zoekt bestaat niet.
-            </EmptyDescription>
-          </EmptyHeader>
-        </Empty>
-      )
+      return NotFound()
     }
 
     return (
