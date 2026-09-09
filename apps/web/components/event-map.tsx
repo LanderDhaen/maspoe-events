@@ -4,12 +4,13 @@ import { Track } from "@web/types/track"
 import { Badge } from "@workspace/ui/components/badge"
 import {
   Empty,
+  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from "@workspace/ui/components/empty"
-import { MapPinX } from "lucide-react"
+import { MapPinX, RefreshCw } from "lucide-react"
 import {
   Map,
   MapRoute,
@@ -18,6 +19,7 @@ import {
 } from "@workspace/ui/components/map"
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"
 import { Fragment } from "react"
+import { Button } from "@workspace/ui/components/button"
 
 interface EventMapProps {
   tracks: Track[]
@@ -27,7 +29,7 @@ interface EventMapProps {
 export default function EventMap({ tracks, bounds }: EventMapProps) {
   const defaultTracks = tracks.map((track) => track.slug)
 
-  const [visibleTracks] = useQueryState(
+  const [visibleTracks, setVisibleTracks] = useQueryState(
     "tracks",
     parseAsArrayOf(parseAsString, ",").withDefault(defaultTracks)
   )
@@ -44,6 +46,32 @@ export default function EventMap({ tracks, bounds }: EventMapProps) {
             Helaas, dit evenement heeft geen routes
           </EmptyDescription>
         </EmptyHeader>
+      </Empty>
+    )
+  }
+
+  if (visibleTracks.length === 0) {
+    const handleShowAllTracks = () => {
+      setVisibleTracks(null)
+    }
+
+    return (
+      <Empty className="h-full bg-muted/30">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <MapPinX />
+          </EmptyMedia>
+          <EmptyTitle>Geen routes geselecteerd</EmptyTitle>
+          <EmptyDescription className="max-w-xs text-pretty">
+            Selecteer een of meerdere routes om ze op de kaart weergeven.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button variant="outline" onClick={handleShowAllTracks}>
+            <RefreshCw data-icon="inline-start" />
+            Toont alle routes
+          </Button>
+        </EmptyContent>
       </Empty>
     )
   }
