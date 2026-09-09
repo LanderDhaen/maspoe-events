@@ -68,7 +68,11 @@ export default async function Page({
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           {event.tracks.map((track) => (
-            <TrackVisibilityFilter key={track.slug} track={track} />
+            <TrackVisibilityFilter
+              key={track.slug}
+              track={track}
+              defaultTracks={event.tracks.map((t) => t.slug)}
+            />
           ))}
         </CardContent>
       </Card>
