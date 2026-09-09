@@ -1,6 +1,6 @@
 import { Database } from "@server/types/database"
 import { Pool, types } from "pg"
-import { CamelCasePlugin, Kysely, PostgresDialect, sql } from "kysely"
+import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely"
 
 types.setTypeParser(20, (val) => {
   return parseInt(val, 10)
