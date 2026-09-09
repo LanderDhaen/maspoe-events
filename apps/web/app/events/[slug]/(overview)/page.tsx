@@ -17,7 +17,7 @@ import {
 import NotFound from "./not-found"
 import TrackVisibility from "@web/components/track-visibility"
 import EventMap from "@web/components/event-map"
-import { MapPinOff } from "lucide-react"
+import { CircleAlert, MapPinOff } from "lucide-react"
 
 export default async function Page({
   params,
@@ -40,6 +40,9 @@ export default async function Page({
     return (
       <Empty className="h-lvh bg-muted/30">
         <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <CircleAlert />
+          </EmptyMedia>
           <EmptyTitle>Er is iets misgegaan</EmptyTitle>
           <EmptyDescription>
             Helaas, er is iets misgegaan bij het ophalen van het evenement.
