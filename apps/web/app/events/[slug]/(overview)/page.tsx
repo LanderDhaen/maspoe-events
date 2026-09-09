@@ -22,6 +22,7 @@ import {
 } from "@workspace/ui/components/map"
 import NotFound from "./not-found"
 import { Fragment } from "react"
+import TrackVisibilityFilter from "@web/components/track-visibility-filter"
 
 export default async function Page({
   params,
@@ -67,13 +68,7 @@ export default async function Page({
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           {event.tracks.map((track) => (
-            <Badge
-              style={{ backgroundColor: `#${track.color}` }}
-              key={track.slug}
-              className="w-32"
-            >
-              {track.name}
-            </Badge>
+            <TrackVisibilityFilter key={track.slug} track={track} />
           ))}
         </CardContent>
       </Card>
