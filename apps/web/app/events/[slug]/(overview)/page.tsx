@@ -21,6 +21,7 @@ import {
   MarkerContent,
 } from "@workspace/ui/components/map"
 import NotFound from "./not-found"
+import { Fragment } from "react"
 
 export default async function Page({
   params,
@@ -84,7 +85,7 @@ export default async function Page({
           }}
         >
           {event.tracks.map((track) => (
-            <>
+            <Fragment key={track.slug}>
               <MapRoute
                 key={track.slug}
                 coordinates={track.path.map((point) => [point.x, point.y])}
@@ -128,7 +129,7 @@ export default async function Page({
                   </MarkerContent>
                 </MapMarker>
               ))}
-            </>
+            </Fragment>
           ))}
         </Map>
       </div>

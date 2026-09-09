@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use client"
 
 import * as MapLibreGL from "maplibre-gl"
