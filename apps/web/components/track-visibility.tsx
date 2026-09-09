@@ -1,16 +1,13 @@
 "use client"
 
+import { Track } from "@web/types/track"
 import { Badge } from "@workspace/ui/components/badge"
 import { Checkbox } from "@workspace/ui/components/checkbox"
 import { Field, FieldGroup, FieldLabel } from "@workspace/ui/components/field"
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs"
 
 interface TrackVisibilityProps {
-  tracks: {
-    name: string
-    slug: string
-    color: string
-  }[]
+  tracks: Track[]
 }
 
 export default function TrackVisibility({ tracks }: TrackVisibilityProps) {

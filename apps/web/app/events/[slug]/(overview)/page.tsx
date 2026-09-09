@@ -1,6 +1,5 @@
 import { client } from "@web/api"
 import { formatDateRange } from "@web/lib/event"
-import { Badge } from "@workspace/ui/components/badge"
 import {
   Card,
   CardContent,
@@ -14,15 +13,9 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@workspace/ui/components/empty"
-import {
-  Map,
-  MapRoute,
-  MapMarker,
-  MarkerContent,
-} from "@workspace/ui/components/map"
 import NotFound from "./not-found"
-import { Fragment } from "react"
 import TrackVisibility from "@web/components/track-visibility"
+import EventMap from "@web/components/event-map"
 
 export default async function Page({
   params,
@@ -71,60 +64,7 @@ export default async function Page({
         </CardContent>
       </Card>
       <div className="h-full w-full">
-        <Map
-          bounds={event.bounds}
-          fitBoundsOptions={{
-            padding: 50,
-          }}
-        >
-          {event.tracks.map((track) => (
-            <Fragment key={track.slug}>
-              <MapRoute
-                key={track.slug}
-                coordinates={track.path.map((point) => [point.x, point.y])}
-                color={`#${track.color}`}
-              />
-              <MapMarker
-                key={`${track.slug}-start`}
-                longitude={track.startingPoint.x}
-                latitude={track.startingPoint.y}
-              >
-                <MarkerContent>
-                  <Badge style={{ backgroundColor: `#${track.color}` }}>
-                    Start
-                  </Badge>
-                </MarkerContent>
-              </MapMarker>{" "}
-              <MapMarker
-                key={`${track.slug}-end`}
-                longitude={track.endPoint.x}
-                latitude={track.endPoint.y}
-              >
-                <MarkerContent>
-                  <Badge style={{ backgroundColor: `#${track.color}` }}>
-                    Finish
-                  </Badge>
-                </MarkerContent>
-              </MapMarker>
-              {track.checkpoints.map((checkpoint) => (
-                <MapMarker
-                  key={checkpoint.id}
-                  longitude={checkpoint.point.x}
-                  latitude={checkpoint.point.y}
-                >
-                  <MarkerContent>
-                    <div
-                      className="flex size-6 items-center justify-center rounded-full text-primary-foreground tabular-nums"
-                      style={{ backgroundColor: `#${track.color}` }}
-                    >
-                      {checkpoint.abbreviation}
-                    </div>
-                  </MarkerContent>
-                </MapMarker>
-              ))}
-            </Fragment>
-          ))}
-        </Map>
+        <EventMap tracks={event.tracks} bounds={event.bounds} />
       </div>
     </div>
   )
